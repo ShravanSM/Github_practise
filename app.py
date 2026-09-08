@@ -41,6 +41,20 @@ def submit():
     except Exception as e:
         return render_template('index.html',error=str(e))
 
+@app.route('/submittodoitem', methods=['POST'])
+def submittodoitem():
+    itemName = request.form.get('itemName')
+    itemDescription = request.form.get('itemDescription')
+
+    data = {
+        'itemName': itemName,
+        'itemDescription': itemDescription
+    }
+
+    collection.insert_one(data)
+
+    return redirect(url_for('success'))
+
 @app.route('/success')
 def success():
     return render_template('success.html')
